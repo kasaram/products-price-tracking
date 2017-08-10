@@ -1,8 +1,8 @@
-const userRoutes = require('./routes/users');
+const authRoutes = require('./routes/authRoutes');
 
 // Routes function
 const routes = (app) => {
-  app.use('/api/users', userRoutes); // User Routes
+  app.use('/auth', authRoutes); // auth Routes
 
   // 404 Route
   app.get('*', err_404);
