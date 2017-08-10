@@ -1,7 +1,7 @@
 const authRoutes = require('./routes/authRoutes');
 
 // Routes function
-const routes = (app) => {
+let routes = (app) => {
   app.use('/auth', authRoutes); // auth Routes
 
   // 404 Route
@@ -9,7 +9,7 @@ const routes = (app) => {
 };
 
 // Error 404 Handler
-const err_404 = (req, res) => {
+let err_404 = (req, res) => {
   res.status(404).json({
     success: false,
     msg: 'Invalid API Endpoint'

@@ -1,10 +1,18 @@
 const express = require('express');
 
-const router = express.Router();
+const validator = require('../services/validator');
+
+const router = express.Router(); // router instance
 
 // signup user
-router.post('register', (req, res, next) => {
-  res.send('User registration');
+router.post('/register', validator.userValidate, (req, res, next) => {
+  let user = {
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    email: req.body.email,
+    password: req.body.password
+  }
+  console.log(user);
 });
 
 // login user
