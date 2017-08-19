@@ -1,8 +1,10 @@
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 // Routes function
 let routes = (app) => {
   app.use('/auth', authRoutes); // auth Routes
+  app.use('/user', userRoutes); // user Routes
 
   // 404 Route
   app.get('*', err_404);

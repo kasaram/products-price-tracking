@@ -1,5 +1,6 @@
 const express = require('express');
 
+const User = require('../models/user.js');
 const validator = require('../services/validator');
 
 const router = express.Router(); // router instance
@@ -12,12 +13,21 @@ router.post('/register', validator.userValidate, (req, res, next) => {
     email: req.body.email,
     password: req.body.password
   }
-  console.log(user);
+  User.createUser(new User(user), (promise) => {
+    promise.onResolve((err, user) => {
+      if (err) throw err;
+      res.status(201).json({
+        success: true,
+        msg: 'Registration succsessful',
+        user: user
+      });
+    });
+  });
 });
 
 // login user
 router.post('login', (req, res, next) => {
-  res.send('Users list coming soon...');
+  
 });
 
 module.exports = router;

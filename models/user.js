@@ -33,7 +33,15 @@ module.exports.createUser = (user, callback) => {
     bcrypt.hash(user.password, salt, function(err, hash) {
       if (err) throw err;
       user.password = hash;
-      user.save(callback);
+      callback(user.save());
     });
   });
-}
+};
+
+// compare password of the requested user
+module.exports.comparePassword((password, hash, callback) => {
+  bcrypt.compare(password, hash, (err, match) => {
+    if (err) throw err;
+    callback(null, match);
+  });
+});

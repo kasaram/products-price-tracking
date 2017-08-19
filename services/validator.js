@@ -1,3 +1,4 @@
+const User = require('../models/user');
 
 // validate user middleware
 let userValidate = (req, res, next) => {
@@ -23,16 +24,22 @@ let userValidate = (req, res, next) => {
   } else if (req.body.confirm_password !== req.body.password) {
     errors.confirm_password = 'Passwords does not match';
   }
-  
-  if (Object.keys(errors).length === 0 && errors.constructor === Object) { // validated; since errors object is empty
-    return next();
-  } else { // not validated. errors present. respond with errors.
-    res.status(401).json({
-      success: false,
-      msg: 'Bad user data',
-      errors: errors
-    });
-  }
+
+  User.findOne({email: req.body.email}, (err, user) => {
+    if (user) {
+      errors.email = 'User already exists';
+    }
+
+    if (Object.keys(errors).length === 0 && errors.constructor === Object) { // validated; since errors object is empty
+      return next();
+    } else { // not validated. errors present. respond with errors.
+      res.status(401).json({
+        success: false,
+        msg: 'Bad user data',
+        errors: errors
+      });
+    }
+  });
 };
 
 module.exports.userValidate = userValidate;

@@ -43,6 +43,10 @@ app.use(cors());
 // Morgan logger
 app.use(morgan('tiny'));
 
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Call routes
 require('./routes')(app);
 
