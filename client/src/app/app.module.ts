@@ -8,6 +8,7 @@ import { AppRoutes } from './app.routes';
 
 // Directives
 import { UniqueEmailDirective } from './directives/unique-email.directive';
+import { MissmatchPasswordDirective } from './directives/missmatch-password.directive';
 
 // Services
 import { UserService } from './services/user.service';
@@ -32,7 +33,8 @@ import { SignupComponent } from './components/signup/signup.component';
     WorkComponent,
     PriceComponent,
     SignupComponent,
-    UniqueEmailDirective
+    UniqueEmailDirective,
+    MissmatchPasswordDirective
   ],
   imports: [
     BrowserModule,

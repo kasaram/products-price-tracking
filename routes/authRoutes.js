@@ -18,8 +18,7 @@ router.post('/register', validator.userValidate, (req, res, next) => {
       if (err) throw err;
       res.status(201).json({
         success: true,
-        msg: 'Registration succsessful',
-        user: user
+        msg: 'Registration succsessful'
       });
     });
   });

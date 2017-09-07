@@ -2,23 +2,29 @@
 <br/>
 <div class="row">
   <div class="col-sm-6 col-xs-12 col-sm-offset-3">
-    <form class="form-horizontal">
-      <div class="form-group">
+    <form class="form-horizontal" #userForm="ngForm" (submit)="registerUser()">
+      <div class="form-group" [ngClass]="fn.invalid && fn.touched ? 'has-error' : ''">
         <label for="first_name" class="col-sm-3 control-label">First Name</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="first_name" placeholder="First Name" required>
+          <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" required [(ngModel)]="user.first_name" #fn="ngModel">
+          <div *ngIf="fn.invalid && fn.touched">
+            <span id="fnRequired" class="help-block" *ngIf="fn.errors.required">First Name is required</span>
+          </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" [ngClass]="ln.invalid && ln.touched ? 'has-error' : ''">
         <label for="last_name" class="col-sm-3 control-label">Last Name</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="last_name" placeholder="Last Name" required>
+          <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" required [(ngModel)]="user.last_name" #ln="ngModel">
+          <div *ngIf="ln.invalid && ln.touched">
+            <span id="lnRequired" class="help-block" *ngIf="ln.errors.required">Last Name is required</span>
+          </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" [ngClass]="em.invalid && em.touched ? 'has-error' : ''">
         <label for="email" class="col-sm-3 control-label">Email</label>
         <div class="col-sm-9">
-          <input type="email" class="form-control" id="email" name="email" placeholder="Email" [(ngModel)]="email" #em="ngModel" required email uniqueEmail>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Email" [(ngModel)]="user.email" #em="ngModel" required email uniqueEmail>
           <div *ngIf="em.invalid && em.touched">
             <span id="emailRequired" class="help-block" *ngIf="em.errors.required">Email is required</span>
             <span id="invalidEmail" class="help-block" *ngIf="!em.errors.required && em.errors.email">Email is invalid</span>
@@ -26,21 +32,28 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" [ngClass]="p.invalid && p.touched ? 'has-error' : ''">
         <label for="password" class="col-sm-3 control-label">Password</label>
         <div class="col-sm-9">
-          <input type="password" class="form-control" id="password" placeholder="Password" required>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required [(ngModel)]="user.password" #p="ngModel">
+          <div *ngIf="p.invalid && p.touched">
+            <span id="pRequired" class="help-block" *ngIf="p.errors.required">Password is required</span>
+          </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" [ngClass]="cp.invalid && cp.touched ? 'has-error' : ''">
         <label for="confirm_password" class="col-sm-3 control-label">Confirm password</label>
         <div class="col-sm-9">
-          <input type="password" class="form-control" id="confirm_password" placeholder="Confirm password" required>
+          <input type="password" class="form-control" id="confirm_password" name="confirm_passowrd" placeholder="Confirm password" missmatchPassword="password" required [(ngModel)]="user.confirm_password" #cp="ngModel">
+          <div *ngIf="cp.invalid && cp.touched">
+            <span id="cpRequired" class="help-block" *ngIf="cp.errors.required">Password Confirmation is required</span>
+            <span id="missmatchPassword" class="help-block" *ngIf="!cp.errors.required && cp.errors.mismatchPassword">Passwords missmatch</span>
+          </div>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-9">
-          <button type="submit" class="btn btn-primary">Sign Up</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!userForm.form.valid">Sign Up</button>
         </div>
       </div>
     </form>

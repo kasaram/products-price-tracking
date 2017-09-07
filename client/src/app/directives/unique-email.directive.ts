@@ -19,7 +19,16 @@ import { UserService } from '../services/user.service';
 export class UniqueEmailDirective implements Validator {
   constructor(private User: UserService) {}
   
-  validate(control: AbstractControl) {
-    return this.User.checkUniqueEmail(control.value);
+  validate(control: AbstractControl): Observable<{[key: string]: any}> {
+    return new Observable(observer => {
+      this.User.checkUniqueEmail(control.value)
+        .subscribe(res => {
+          if (res.userExists) {
+            observer.next({userExists: true});
+          } else {
+            observer.next(null);
+          }
+        });
+    }).first();
   }
 }
