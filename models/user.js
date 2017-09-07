@@ -39,9 +39,17 @@ module.exports.createUser = (user, callback) => {
 };
 
 // compare password of the requested user
-module.exports.comparePassword((password, hash, callback) => {
+module.exports.comparePassword = (password, hash, callback) => {
   bcrypt.compare(password, hash, (err, match) => {
     if (err) throw err;
     callback(null, match);
   });
-});
+};
+
+// check if user already exists
+module.exports.checkUserExists = (email, callback) => {
+  User.findOne({email: email}, (err, user) => {
+    if (err) throw err;
+    user ? callback(true) : callback(false);
+  });
+};

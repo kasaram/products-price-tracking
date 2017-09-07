@@ -7,7 +7,10 @@ import { HttpModule } from '@angular/http';
 import { AppRoutes } from './app.routes';
 
 // Directives
-import { EmailValidatorDirective } from './directives/email.directive';
+import { UniqueEmailDirective } from './directives/unique-email.directive';
+
+// Services
+import { UserService } from './services/user.service';
 
 // Components
 import { AppComponent } from './app.component'; // Root Component
@@ -29,7 +32,7 @@ import { SignupComponent } from './components/signup/signup.component';
     WorkComponent,
     PriceComponent,
     SignupComponent,
-    EmailValidatorDirective
+    UniqueEmailDirective
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,9 @@ import { SignupComponent } from './components/signup/signup.component';
     HttpModule,
     AppRoutes
   ],
-  providers: [],
+  providers: [
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

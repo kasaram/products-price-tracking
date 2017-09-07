@@ -1,6 +1,6 @@
 const express = require('express');
 
-const User = require('../models/user.js');
+const User = require('../models/user');
 const validator = require('../services/validator');
 
 const router = express.Router(); // router instance

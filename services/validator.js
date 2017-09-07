@@ -25,8 +25,8 @@ let userValidate = (req, res, next) => {
     errors.confirm_password = 'Passwords does not match';
   }
 
-  User.findOne({email: req.body.email}, (err, user) => {
-    if (user) {
+  User.checkUserExists(req.body.email, (userExists) => {
+    if (userExists) {
       errors.email = 'User already exists';
     }
 

@@ -38,7 +38,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
 // CORS Middleware
-app.use(cors());
+let whiteList = ['http://192.168.1.65:4200'];
+let corsOptions = {
+  origin: (origin, callback) => {
+    if (whiteList.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+app.use(cors(corsOptions));
 
 // Morgan logger
 app.use(morgan('tiny'));

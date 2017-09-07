@@ -15,13 +15,14 @@
           <input type="text" class="form-control" id="last_name" placeholder="Last Name" required>
         </div>
       </div>
-      <div class="form-group has-feedback">
+      <div class="form-group">
         <label for="email" class="col-sm-3 control-label">Email</label>
         <div class="col-sm-9">
-          <input type="email" class="form-control" id="email" name="email" placeholder="Email" [(ngModel)]="email" #em="ngModel" required validEmail>
-          <div *ngIf="em.invalid && (em.dirty || em.touched)">
-            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-            <span id="invalidEmail" class="help-block" *ngIf="em.errors.validEmail">Email is invalid</span>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Email" [(ngModel)]="email" #em="ngModel" required email uniqueEmail>
+          <div *ngIf="em.invalid && em.touched">
+            <span id="emailRequired" class="help-block" *ngIf="em.errors.required">Email is required</span>
+            <span id="invalidEmail" class="help-block" *ngIf="!em.errors.required && em.errors.email">Email is invalid</span>
+            <span id="uniqueEmail" class="help-block" *ngIf="!em.errors.required && !em.errors.email && em.errors.userExists">Email already taken</span>
           </div>
         </div>
       </div>
