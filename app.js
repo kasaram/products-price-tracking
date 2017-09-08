@@ -43,8 +43,7 @@ let whiteList = [
   'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop',
   'http://localhost:3000',
   'http://127.0.0.1:8080',
-  'http://pricetrack.in',
-  'https://pricetrack.in'
+  'http://pricetrack.in'
 ];
 let corsOptions = {
   origin: (origin, callback) => {
