@@ -12,6 +12,10 @@ import { MissmatchPasswordDirective } from './directives/missmatch-password.dire
 
 // Services
 import { UserService } from './services/user.service';
+import { MessageService } from './services/message.service';
+
+// Guards
+import { AuthGuard } from './guards/auth.guard';
 
 // Components
 import { AppComponent } from './app.component'; // Root Component
@@ -22,6 +26,7 @@ import { HomeComponent } from './components/home/home.component';
 import { WorkComponent } from './components/work/work.component';
 import { PriceComponent } from './components/price/price.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +39,8 @@ import { SignupComponent } from './components/signup/signup.component';
     PriceComponent,
     SignupComponent,
     UniqueEmailDirective,
-    MissmatchPasswordDirective
+    MissmatchPasswordDirective,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +49,9 @@ import { SignupComponent } from './components/signup/signup.component';
     AppRoutes
   ],
   providers: [
-    UserService
+    UserService,
+    MessageService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

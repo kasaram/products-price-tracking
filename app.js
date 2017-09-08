@@ -38,7 +38,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
 // CORS Middleware
-let whiteList = ['http://192.168.1.65:4200'];
+let whiteList = [
+  'http://192.168.1.65:4200',
+  'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+];
 let corsOptions = {
   origin: (origin, callback) => {
     if (whiteList.indexOf(origin) !== -1) {

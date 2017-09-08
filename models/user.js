@@ -53,3 +53,11 @@ module.exports.checkUserExists = (email, callback) => {
     user ? callback(true) : callback(false);
   });
 };
+
+// find user by id
+module.exports.findUserByUsername = (email, callback) => {
+  User.findOne({email: email}, (err, user) => {
+    if (err) throw err;
+    callback(user);
+  });
+};
