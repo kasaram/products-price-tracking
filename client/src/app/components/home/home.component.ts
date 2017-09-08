@@ -9,6 +9,7 @@ import { MessageService } from '../../services/message.service';
 })
 export class HomeComponent implements OnInit {
   msg: string = null;
+  loading: boolean = false;
   
   constructor(private Message: MessageService) { }
 
