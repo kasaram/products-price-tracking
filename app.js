@@ -40,7 +40,8 @@ app.use(bodyParser.json());
 // CORS Middleware
 let whiteList = [
   'http://192.168.1.65:4200',
-  'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+  'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop',
+  'http://localhost:3000'
 ];
 let corsOptions = {
   origin: (origin, callback) => {
