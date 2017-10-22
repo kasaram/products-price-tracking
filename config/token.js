@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret = require('./auth').secret;
+const secret = process.env.SECRET;
 
 module.exports = (user) => {
   let options = {};

@@ -8,11 +8,10 @@ const morgan = require('morgan');
 const passport = require('passport');
 const path = require("path");
 
-// Local modules
-const db_config = require("./config/db");
+require('dotenv').config();
 
 // App Port
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 // Mongoose Options
 const mongo_options = {
@@ -20,7 +19,8 @@ const mongo_options = {
 };
 
 // Connnect to mongoose
-mongoose.connect(db_config.DB_URL, mongo_options);
+const URI = process.env.DB_URL || 'mongodb://localhost:27017/pricetrack'
+mongoose.connect(URI, mongo_options);
 
 // Mongoose connection instance
 const db = mongoose.connection;
@@ -60,8 +60,12 @@ app.use(cors(corsOptions));
 app.use(morgan('tiny'));
 
 // passport middleware
+const JwtStrategy = require('./config/passport-jwt');
+const FacebookStrategy = require('./config/passport-facebook');
 app.use(passport.initialize());
 app.use(passport.session());
+passport.use(JwtStrategy);
+passport.use(FacebookStrategy);
 
 // Call routes
 require('./routes')(app);
