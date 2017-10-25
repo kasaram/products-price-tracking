@@ -1,7 +1,10 @@
 const User = require('../models/user');
+const _ = require('lodash');
+const crawl = require('../services/crawler');
+const sanitizer = require('../helpers/param-sanitizer');
 
 // validate user middleware
-let userValidate = (req, res, next) => {
+const userValidate = (req, res, next) => {
   let errors = {};
 
   // email regexp
@@ -42,4 +45,39 @@ let userValidate = (req, res, next) => {
   });
 };
 
+// Validate links
+const linkValidator = (req, res, next) => {
+  req.body = sanitizer(req.body, ['store', 'productId']);
+  const errors = {};
+
+  if (!req.body.store) {
+    errors.store = "Store name is required";
+  }
+  if (req.body.store && !_.includes(['amazon', 'flipkart'], req.body.store)) {
+    errors.store = "Please select a valid store (Amazon or Flipkart)";
+  }
+  if (!req.body.productId) {
+    errors.productId = "Product id is required";
+  }
+
+  if (Object.keys(errors).length) {
+    return res.status(200).json({
+      success: false,
+      msg: "Bad Data",
+      errors
+    });
+  } else {
+    const product = {};
+    product.store = req.body.store;
+    product.id = req.body.productId;
+    crawl(product, (err, item) => {
+      if (err) return next(err);
+      req.body.item = item;
+      return next();
+    });
+  }
+  
+};
+
 module.exports.userValidate = userValidate;
+module.exports.link = linkValidator;

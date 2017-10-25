@@ -37,9 +37,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Body parser MW
 app.use(bodyParser.json());
 
+// passport middleware
+app.use(passport.initialize());
+const JwtStrategy = require('./config/passport-jwt');
+const FacebookStrategy = require('./config/passport-facebook');
+passport.use(JwtStrategy);
+passport.use(FacebookStrategy);
+
+// Morgan logger
+app.use(morgan('tiny'));
+
+// Call routes
+require('./routes')(app);
+
 // CORS Middleware
 let whiteList = [
   'http://192.168.1.65:4200',
+  'http://192.168.1.65:3000',
   'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop',
   'http://localhost:3000',
   'http://127.0.0.1:8080',
@@ -56,19 +70,17 @@ let corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// Morgan logger
-app.use(morgan('tiny'));
+// error handler
+app.use((err, req, res, next) => {
+  console.log("ERR", err);
 
-// passport middleware
-const JwtStrategy = require('./config/passport-jwt');
-const FacebookStrategy = require('./config/passport-facebook');
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(JwtStrategy);
-passport.use(FacebookStrategy);
-
-// Call routes
-require('./routes')(app);
+  // respond with error
+  res.status(err.status || 500);
+  res.json({
+    success: false,
+    msg: "Something went wrong"
+  });
+});
 
 // start express listening on port
 app.listen(port, () => {

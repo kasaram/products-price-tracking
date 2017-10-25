@@ -1,11 +1,21 @@
-const FacebookStrategy = require('passport-facebook');
+const FacebookStrategy = require('passport-facebook').Strategy;
 
 const User = require('../models/user');
 
-module.exports = new FacebookStrategy({
-  clientID: process.env.FACEBOOK_KEY,
-  clientSecret: process.env.FACEBOOK_SECRET,
-  callbackURL: process.env.API + '/auth/facebook/callback'
-}, (accessToken, refreshToken, profile, done) => {
-  console.log("PROFILE", profile);
+let opts = {};
+opts.clientID = process.env.FACEBOOK_KEY,
+opts.clientSecret = process.env.FACEBOOK_SECRET,
+opts.callbackURL = process.env.API + '/auth/facebook/callback',
+opts.profileFields = ['id', 'displayName', 'email', 'name', 'birthday', 'gender'];
+module.exports = new FacebookStrategy(opts, (accessToken, refreshToken, profile, done) => {
+  User.findOrCreateByFacebook(profile, (err, user) => {
+    if (err) {
+      return done(err, false);
+    }
+    if (user) {
+      return done(null, user);
+    } else {
+      return done(null, false);
+    }
+  });
 });
