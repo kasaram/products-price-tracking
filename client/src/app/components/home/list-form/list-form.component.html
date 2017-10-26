@@ -1,0 +1,17 @@
+<form role="form" novalidate #listForm="ngForm">
+  <p class="text-center">Enter page link for product you want to track below or use Google Chrome Extension
+  </p>
+  <div class="input-group input-group-small">
+    <input id="itemInputURL" autofocus="autofocus" type="text" name="url"
+            placeholder="Enter product link like http://www.flipkart.com/apple-iphone-5s/p/itmdppzzgvhwgbst"
+            class="form-control"
+            [(ngModel)]="link.url" required>
+    <span class="input-group-btn">
+      <button type="button" id="addItemBtnNL" class="btn btn-success" (click)="addLink();listForm.reset()" [disabled]="listForm.invalid">
+        Add to watch list</button>
+    </span>
+  </div>
+  <div class="alert alert-danger" *ngIf="error">
+    Enter a valid link!
+  </div>
+</form>

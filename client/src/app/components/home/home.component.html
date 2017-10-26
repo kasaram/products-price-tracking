@@ -39,19 +39,7 @@
     <div class="addItem">
       <br/>
       <br/>
-      <form role="form">
-        <p class="text-center">Enter page link for product you want to track below or use Google Chrome Extension
-        </p>
-        <div class="input-group input-group-small">
-          <input id="itemInputURL" autofocus="autofocus" type="text"
-                 placeholder="Enter product link like http://www.flipkart.com/apple-iphone-5s/p/itmdppzzgvhwgbst"
-                 class="form-control">
-          <span class="input-group-btn">
-            <button type="button" id="addItemBtnNL" class="btn btn-success">
-              Add to watch list</button>
-          </span>
-        </div>
-      </form>
+      <app-list-form (linkAdded)="linkAdded($event)"></app-list-form>
     </div>
     <div class="listItem">
       <br/>

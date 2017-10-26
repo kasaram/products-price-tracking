@@ -28,6 +28,7 @@ import { PriceComponent } from './components/price/price.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 import { LinkComponent } from './components/home/link/link.component';
+import { ListFormComponent } from './components/home/list-form/list-form.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { LinkComponent } from './components/home/link/link.component';
     UniqueEmailDirective,
     MissmatchPasswordDirective,
     LoginComponent,
-    LinkComponent
+    LinkComponent,
+    ListFormComponent
   ],
   imports: [
     BrowserModule,

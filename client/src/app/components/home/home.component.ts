@@ -23,11 +23,27 @@ export class HomeComponent implements OnInit {
       this.Message.msg = null;
     }, 5000);
     if (this.User.loggedIn()) {
-      this.User.getLinks()
-        .subscribe((res) => {
-          this.links = res.links;
-        });
+      this.fetchLinks();
     }
+    this.Message.loggedIn
+      .subscribe(loggedIn => {
+        if (loggedIn) {
+          this.fetchLinks();
+        } else {
+          this.links = null;
+        }
+      });
+  }
+
+  linkAdded(link: any) {
+    this.links.push(link);
+  }
+
+  fetchLinks(): void {
+    this.User.getLinks()
+      .subscribe((res) => {
+        this.links = res.links;
+      });
   }
 
 }

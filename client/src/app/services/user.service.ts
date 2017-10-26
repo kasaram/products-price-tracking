@@ -4,6 +4,8 @@ import { environment as ENV } from '../../environments/environment';
 import 'rxjs/add/operator/map';
 import { tokenNotExpired } from 'angular2-jwt';
 
+import { MessageService } from './message.service';
+
 @Injectable()
 export class UserService {
   username: any;
@@ -11,12 +13,17 @@ export class UserService {
   code: string;
   headers = new Headers();
 
-  constructor(private http: Http) {
-    this.headers.append('Authorization', `JWT ${this.getToken()}`);
+  constructor(private http: Http,
+              private Msg: MessageService) {
+  }
+
+  setHeaders(): void {
+    const token = this.token || this.getToken();
+    this.headers.append('Authorization', `JWT ${token}`);
   }
 
   // Check if user email exists
-  checkUniqueEmail(email: string) {
+  checkUniqueEmail(email: string): any {
     return this.http.post(
       ENV.apiUrl + '/user/check',
       {email: email}
@@ -24,7 +31,7 @@ export class UserService {
   }
 
   // register the user
-  registerUser(user: any) {
+  registerUser(user: any): any {
     return this.http.post(
       ENV.apiUrl + '/auth/register',
       user
@@ -32,16 +39,16 @@ export class UserService {
   }
 
   // login user normal
-  loginUser(user: any) {
+  loginUser(user: any): any {
     return this.http.post(
       ENV.apiUrl + '/auth/login',
       user
     ).map(res => {
       const Response = res.json();
-      if (Response.token && Response.username) {
+      const { token, username } = Response;
+      if (token && username) {
         this.saveToken(Response.username, Response.token);
       }
-
       return Response;
     });
   }
@@ -51,7 +58,8 @@ export class UserService {
     return this.http.get(`${ENV.apiUrl}/auth/facebook/callback?code=${encodedCode}`)
       .map(res => {
         const Response = res.json();
-        if (Response.token && Response.username) {
+        const { token, username } = Response;
+        if (token && username) {
           this.saveToken(Response.username, Response.token);
         }
         return Response;
@@ -74,21 +82,24 @@ export class UserService {
   }
 
   getLinks(): any {
+    this.setHeaders();
     return this.http.get(`${ENV.apiUrl}/links`, {headers: this.headers})
       .map(res => res.json());
   }
 
   postLink(link): any {
+    this.setHeaders();
     return this.http.post(`${ENV.apiUrl}/links`, link, {headers: this.headers})
       .map(res => res.json());
   }
 
   // save token to local storage
   saveToken(username: string, token: string) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('username', username);
     this.token = token;
     this.username = username;
+    localStorage.setItem('token', token);
+    localStorage.setItem('username', username);
+    this.Msg.loggedIn.emit(true);
   }
 
   // logout user
@@ -96,6 +107,7 @@ export class UserService {
     this.token = null;
     this.username = null;
     localStorage.clear();
+    this.Msg.loggedIn.emit(false);
   }
 
   getToken() {
