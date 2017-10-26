@@ -11,6 +11,7 @@ import { UserService } from '../../services/user.service';
 export class HomeComponent implements OnInit {
   msg: string = null;
   loading = false;
+  links: any;
 
   constructor(private Message: MessageService,
               private User: UserService) { }
@@ -23,8 +24,8 @@ export class HomeComponent implements OnInit {
     }, 5000);
     if (this.User.loggedIn()) {
       this.User.getLinks()
-        .subscribe((res: object) => {
-          console.log(res);
+        .subscribe((res) => {
+          this.links = res.links;
         });
     }
   }

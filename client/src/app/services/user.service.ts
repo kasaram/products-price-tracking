@@ -78,6 +78,11 @@ export class UserService {
       .map(res => res.json());
   }
 
+  postLink(link): any {
+    return this.http.post(`${ENV.apiUrl}/links`, link, {headers: this.headers})
+      .map(res => res.json());
+  }
+
   // save token to local storage
   saveToken(username: string, token: string) {
     localStorage.setItem('token', token);

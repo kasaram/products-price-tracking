@@ -71,7 +71,7 @@
           </div>
         </div>
       </div>
-      <h4>You are currently tracking <b>3</b> items.
+      <h4>You are currently tracking <b>{{links ? links.length : 0}}</b> items.
         <div>
           <h5>Sort list by &nbsp;<a href="#" class="byprice">price</a>&nbsp;
             <a href="#" class="bytitle">title</a>&nbsp;<a href="#" class="byvendor">vendor</a>&nbsp;
@@ -82,7 +82,7 @@
       <div class="dataToSort">
         <div>
           <div>
-            <h1>Tracked items list placeholder</h1>
+            <app-link *ngFor="let link of links" [link]="link"></app-link>
           </div>
           <hr/>
         </div>

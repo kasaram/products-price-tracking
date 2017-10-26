@@ -53,7 +53,7 @@ const linkValidator = (req, res, next) => {
   if (!req.body.store) {
     errors.store = "Store name is required";
   }
-  if (req.body.store && !_.includes(['amazon', 'flipkart'], req.body.store)) {
+  if (req.body.store && !_.includes(['amazon.in', 'flipkart.com'], req.body.store)) {
     errors.store = "Please select a valid store (Amazon or Flipkart)";
   }
   if (!req.body.productId) {

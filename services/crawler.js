@@ -1,6 +1,6 @@
 const Crawler = require('crawler');
 const _ = require('lodash');
-var getImgSrc = require('get-img-src');
+const selectors = require('../helpers/selectors');
 
 module.exports = (product, callback) => {
   const c = new Crawler({
@@ -38,29 +38,13 @@ module.exports = (product, callback) => {
 };
 
 const genLink = (product) => {
-  let link;
-  if (product.store === 'amazon') {
-    link = `https://www.amazon.in/${product.id}`;
-  } else if (product.store === 'flipkart') {
-    link = `https://www.flipkart.com/${product.id}`;
-  }
-  
-  return link;
+  return `https://www.${product.store}/${product.id}`;;
 }
 
 const getStoreEnv = (product) => {
-  let env = {};
-  switch (product.store) {
-    case 'amazon':
-      env.title = process.env.TITLE_AMZN;
-      env.image = process.env.IMAGE_AMZN;
-      env.price = process.env.PRICE_AMZN;
-      break;
-    case 'flipkart':
-      env.title = process.env.TITLE_FLPKT;
-      env.image = process.env.IMAGE_FLPKT;
-      env.price = process.env.PRICE_FLPKT;
-      break;
-  }
+  const env = {};
+  env.title = selectors[product.store].title;
+  env.image = selectors[product.store].image;
+  env.price = selectors[product.store].price;
   return env;
 }

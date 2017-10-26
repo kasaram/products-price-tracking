@@ -27,6 +27,7 @@ import { WorkComponent } from './components/work/work.component';
 import { PriceComponent } from './components/price/price.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
+import { LinkComponent } from './components/home/link/link.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { LoginComponent } from './components/login/login.component';
     SignupComponent,
     UniqueEmailDirective,
     MissmatchPasswordDirective,
-    LoginComponent
+    LoginComponent,
+    LinkComponent
   ],
   imports: [
     BrowserModule,

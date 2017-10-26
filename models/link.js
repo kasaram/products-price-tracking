@@ -5,7 +5,7 @@ const LinkSchema = new Schema({
   store: {
     type: String,
     required: true,
-    enum: ['amazon', 'flipkart']
+    enum: ['amazon.in', 'flipkart.com']
   },
   productId: {
     type: String,
