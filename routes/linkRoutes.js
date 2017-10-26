@@ -18,7 +18,7 @@ router.route('')
   })
   .post(verify.jwt, validate.link, (req, res, next) => {
     let { price, title, image } = req.body.item;
-    price = parseFloat(price.replace(/,/g, ''));
+    price = parseFloat(price.replace(/[^\d.]/g, ''));
     const link = new Link(req.body);
     link.price = price
     link.title = title;

@@ -10,10 +10,10 @@ module.exports = (product, callback) => {
           callback(err, null);
         } else {
           const $ = res.$;
-
-          const price = _.trim($(process.env.PRICE_AMZN).text());
-          const title = _.trim($(process.env.TITLE_AMZN).text());
-          let image = _.trim($(process.env.IMAGE_AMZN).attr('src'));
+          const env = getStoreEnv(product);
+          const price = _.trim($(env.price).text());
+          const title = _.trim($(env.title).text());
+          const image = _.trim($(env.image).attr('src'));
 
           const item = { price, image, title };
           if (price && title) {
@@ -41,9 +41,26 @@ const genLink = (product) => {
   let link;
   if (product.store === 'amazon') {
     link = `https://www.amazon.in/${product.id}`;
-  } else if (product.store === 'amazon') {
+  } else if (product.store === 'flipkart') {
     link = `https://www.flipkart.com/${product.id}`;
   }
   
   return link;
+}
+
+const getStoreEnv = (product) => {
+  let env = {};
+  switch (product.store) {
+    case 'amazon':
+      env.title = process.env.TITLE_AMZN;
+      env.image = process.env.IMAGE_AMZN;
+      env.price = process.env.PRICE_AMZN;
+      break;
+    case 'flipkart':
+      env.title = process.env.TITLE_FLPKT;
+      env.image = process.env.IMAGE_FLPKT;
+      env.price = process.env.PRICE_FLPKT;
+      break;
+  }
+  return env;
 }
