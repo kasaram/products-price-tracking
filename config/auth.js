@@ -16,4 +16,10 @@ module.exports.jwt = (req, res, next) => {
 };
 
 // Facebook passport auth
-module.exports.facebook = passport.authenticate('facebook', {scope: ['public_profile', 'email'], session: false});
+module.exports.facebook = passport.authenticate(
+  'facebook', 
+  {
+    scope: ['public_profile', 'email'], 
+    session: false
+  }
+);

@@ -13,4 +13,13 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  loginFacebook() {
+    this.User.oauthPopup((code: string) => {
+      this.User.loginFacebook(code)
+        .subscribe(res => {
+          console.log(res);
+        });
+    });
+  }
+
 }

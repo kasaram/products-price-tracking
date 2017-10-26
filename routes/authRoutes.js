@@ -44,7 +44,8 @@ router.post('/login', (req, res, next) => {
           res.status(200).json({
             success: true,
             msg: 'Login Successful',
-            token: token
+            token: token,
+            username: user.email
           });
         } else {
           res.status(401).json({
@@ -67,7 +68,8 @@ router.get('/facebook/callback', auth.facebook, (req, res) => {
   res.status(200).json({
     success: true,
     msg: "Facebook authentication successful",
-    token
+    token,
+    username: user.email
   });
 });
 

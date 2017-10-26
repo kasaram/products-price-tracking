@@ -5,5 +5,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.1.65:3000'
+  apiUrl: 'http://192.168.1.65:3000',
+  clientId: '254361041755193',
+  redirectUri: 'http://192.168.1.65:4200'
 };

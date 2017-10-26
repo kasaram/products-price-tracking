@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MessageService } from '../../services/message.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -9,9 +10,10 @@ import { MessageService } from '../../services/message.service';
 })
 export class HomeComponent implements OnInit {
   msg: string = null;
-  loading: boolean = false;
-  
-  constructor(private Message: MessageService) { }
+  loading = false;
+
+  constructor(private Message: MessageService,
+              private User: UserService) { }
 
   ngOnInit() {
     this.msg = this.Message.msg;
@@ -19,6 +21,12 @@ export class HomeComponent implements OnInit {
       this.msg = null;
       this.Message.msg = null;
     }, 5000);
+    if (this.User.loggedIn()) {
+      this.User.getLinks()
+        .subscribe((res: object) => {
+          console.log(res);
+        });
+    }
   }
 
 }

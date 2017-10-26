@@ -47,9 +47,6 @@ passport.use(FacebookStrategy);
 // Morgan logger
 app.use(morgan('tiny'));
 
-// Call routes
-require('./routes')(app);
-
 // CORS Middleware
 let whiteList = [
   'http://192.168.1.65:4200',
@@ -69,6 +66,9 @@ let corsOptions = {
   }
 };
 app.use(cors(corsOptions));
+
+// Call routes
+require('./routes')(app);
 
 // error handler
 app.use((err, req, res, next) => {
