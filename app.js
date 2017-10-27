@@ -31,22 +31,6 @@ db.on('connected', console.info.bind(console, 'Mongodb Connected!'));
 // Initialize express app
 const app = express();
 
-// Static resource folder
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Body parser MW
-app.use(bodyParser.json());
-
-// passport middleware
-app.use(passport.initialize());
-const JwtStrategy = require('./config/passport-jwt');
-const FacebookStrategy = require('./config/passport-facebook');
-passport.use(JwtStrategy);
-passport.use(FacebookStrategy);
-
-// Morgan logger
-app.use(morgan('tiny'));
-
 // CORS Middleware
 let whiteList = [
   'http://192.168.1.65:4200',
@@ -66,6 +50,22 @@ let corsOptions = {
   }
 };
 app.use(cors(corsOptions));
+
+// Static resource folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Body parser MW
+app.use(bodyParser.json());
+
+// passport middleware
+app.use(passport.initialize());
+const JwtStrategy = require('./config/passport-jwt');
+const FacebookStrategy = require('./config/passport-facebook');
+passport.use(JwtStrategy);
+passport.use(FacebookStrategy);
+
+// Morgan logger
+app.use(morgan('tiny'));
 
 // Call routes
 require('./routes')(app);
