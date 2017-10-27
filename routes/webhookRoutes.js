@@ -3,7 +3,7 @@ const { exec } = require('child_process');
 
 const router = express.Router();
 
-router.any('/deploy', (req, res, next) => {
+router.all('/deploy', (req, res, next) => {
   exec('git pull origin deploy', (err, stdout, stderr) => {
     if (err) {
       console.log(err);
