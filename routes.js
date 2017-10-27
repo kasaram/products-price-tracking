@@ -8,7 +8,7 @@ let routes = (app) => {
   app.use('/auth', authRoutes); // auth Routes
   app.use('/user', userRoutes); // user Routes
   app.use('/links', linkRoutes); // link routes
-  app.use('/webooks', webhookRoutes); // webhooks
+  app.use('/webhooks', webhookRoutes); // webhooks
 
   // 404 Route
   app.get('*', err_404);
