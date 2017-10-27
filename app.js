@@ -49,7 +49,7 @@ let corsOptions = {
     }
   }
 };
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Static resource folder
 app.use(express.static(path.join(__dirname, 'public')));
