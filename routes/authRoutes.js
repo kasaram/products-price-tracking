@@ -21,7 +21,12 @@ router.post('/register', validator.userValidate, (req, res, next) => {
       res.status(201).json({
         success: true,
         msg: 'Registration succsessful, You can now log in',
-        user: {first_name, last_name, email, provider}
+        user: {
+          first_name: user.first_name, 
+          last_name: user.last_name, 
+          email: user.email, 
+          provider: user.provider
+        }
       });
     });
   });
