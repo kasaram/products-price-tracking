@@ -6,3 +6,5 @@ const router = express.Router();
 router.post('/deploy', (req, res, next) => {
   console.log(req.body);
 });
+
+module.exports = router;
