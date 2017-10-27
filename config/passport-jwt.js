@@ -7,8 +7,8 @@ let opts = {};
 opts.secretOrKey = process.env.SECRET;
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('JWT');
 module.exports = new JwtStrategy(opts, (jwt_payload, done) => {
-  let userId = jwt_payload.sub;
-  User.findOne({id: userId}, (err, user) => {
+  const provider_uid = jwt_payload.user;
+  User.findOne({provider_uid}, (err, user) => {
     if (err) {
       return done(err, false);
     }

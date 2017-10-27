@@ -45,7 +45,7 @@ router.post('/login', (req, res, next) => {
     } else {
       User.comparePassword(userPassword, user.password, (err, match) => {
         if (match) {
-          let token = genToken(user);
+          let token = genToken(user.provider_uid);
           res.status(200).json({
             success: true,
             msg: 'Login Successful',
@@ -69,7 +69,7 @@ router.get('/facebook', auth.facebook);
 // facebook auth callback
 router.get('/facebook/callback', auth.facebook, (req, res) => {
   const user = req.user;
-  const token = genToken(user);
+  const token = genToken(user.provider_uid);
   res.status(200).json({
     success: true,
     msg: "Facebook authentication successful",

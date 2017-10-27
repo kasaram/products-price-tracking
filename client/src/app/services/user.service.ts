@@ -67,7 +67,8 @@ export class UserService {
   }
 
   oauthPopup(callback: Function): void {
-    const url = `https://www.facebook.com/v2.10/dialog/oauth?client_id=${ENV.clientId}&redirect_uri=${ENV.redirectUri}`;
+    const url =
+      `https://www.facebook.com/v2.10/dialog/oauth?client_id=${ENV.clientId}&redirect_uri=${ENV.redirectUri}&scope=email,public_profile`;
     const win = window.open(url, 'Facebook Auth', 'width=600,height=700');
     const interval = setInterval(() => {
       try {

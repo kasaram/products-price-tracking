@@ -5,7 +5,7 @@ module.exports = (user) => {
   let options = {};
   options.expiresIn = "7d";
   
-  let token = jwt.sign(user, secret, options);
+  let token = jwt.sign({user}, secret, options);
 
   return token;
 }
