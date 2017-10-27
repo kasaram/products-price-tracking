@@ -19,7 +19,9 @@ export class UserService {
 
   setHeaders(): void {
     const token = this.token || this.getToken();
-    this.headers.append('Authorization', `JWT ${token}`);
+    this.headers = new Headers({
+      'Authorization': `JWT ${token}`
+    });
   }
 
   // Check if user email exists
