@@ -9,7 +9,7 @@ const LinkSchema = new Schema({
   },
   productId: {
     type: String,
-    unique: true
+    required: true
   },
   price: {
     type: Number,
